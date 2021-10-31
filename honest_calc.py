@@ -5,8 +5,8 @@ def is_num(x):
 
 def is_one_digit(v):
     try:
-        v = int(v)
-        return abs(v) < 10
+        n = int(v)
+        return abs(v) < 10 and v % n == 0
     except:
         return False
 
@@ -32,7 +32,10 @@ msg_6 = " ... lazy"
 msg_7 = " ... very lazy"
 msg_8 = " ... very, very lazy"
 msg_9 = "You are"
-
+msg_10 = "Are you sure? It is only one digit! (y / n)"
+msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
+msgs = [msg_1, msg_2, msg_3, msg_4, msg_5, msg_6, msg_7, msg_8, msg_9, msg_10, msg_11, msg_12]
 memory = 0.0
 exit_main = False
 
@@ -67,13 +70,37 @@ while not exit_main:
 
     print(result)
 
-    while True:
+    exit_store = False
+    while not exit_store:  # store result
         answer = input(msg_4+'\n')
         if answer == 'y':
+            if is_one_digit(result):
+                msg_index = 10
+                while True:
+                    answer = input(f"{msgs[msg_index - 1]}\n")
+                    if answer == 'y':
+                        if msg_index < 12:
+                            msg_index += 1
+                            continue 
+                        else:
+                            memory = result
+                            exit_store = True
+                            break  # 91 -> 96 -> 101
+                    elif answer == 'n':
+                        break  # 91 -> 96 -> 101
+
+            else:
+                memory = result
+                exit_store = True
+                break  # 104
+
+        else:
             memory = result
-            break
+            exit_store = True
+            continue  # 74
+
         if answer == 'n':
-            break
+            break  # 104
 
     exit_calc = False
     while not exit_calc:
