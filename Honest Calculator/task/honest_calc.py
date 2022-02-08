@@ -15,6 +15,22 @@ def check(v1, v2, v3):
         print(msg_9 + msg)
 
 
+def store(result):
+    if is_one_digit(result):
+        msg_index = 10
+        while True:
+            answer = input(f"{msgs[msg_index - 1]}\n")
+            if answer == 'y':
+                if msg_index < 12:
+                    msg_index += 1
+                    continue
+                else:
+                    return True
+            elif answer == 'n':
+                return False
+    else:
+        return True
+
 msg_0 = "Enter an equation"
 msg_1 = "Do you even know what numbers are? Stay focused!"
 msg_2 = "Yes ... an interesting math operation. You've slept through all classes, haven't you?"
@@ -25,7 +41,10 @@ msg_6 = " ... lazy"
 msg_7 = " ... very lazy"
 msg_8 = " ... very, very lazy"
 msg_9 = "You are"
-
+msg_10 = "Are you sure? It is only one digit! (y / n)"
+msg_11 = "Don't be silly! It's just one number! Add to the memory? (y / n)"
+msg_12 = "Last chance! Do you really want to embarrass yourself? (y / n)"
+msgs = [msg_1, msg_2, msg_3, msg_4, msg_5, msg_6, msg_7, msg_8, msg_9, msg_10, msg_11, msg_12]
 memory = 0.0
 exit_main = False
 
@@ -65,7 +84,8 @@ while not exit_main:
     while True:
         answer = input(msg_4+'\n')
         if answer == 'y':
-            memory = result
+            if store(result):
+                memory = result
             break
         if answer == 'n':
             break
